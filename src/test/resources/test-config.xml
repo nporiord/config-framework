@@ -1,0 +1,18 @@
+<test>
+	<tmp>This is the value of tmp.</tmp>
+	<another>This is the value of another.</another>
+	<niallMap>
+		<entry>
+			<string>apple</string>
+			<float>123.553</float>
+		</entry>
+		<entry>
+			<string>orange</string>
+			<float>55.4</float>
+		</entry>
+	</niallMap>
+	<niallList>
+		<string>ENTRY1INLIST</string>
+		<string>ENTRY2INLIST</string>
+	</niallList>
+</test>
