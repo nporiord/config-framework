@@ -4,3 +4,21 @@
 *.jar
 *.war
 *.ear
+
+#other ide cruft
+logs
+project/project
+project/target
+target
+tmp
+.history
+dist
+.classpath
+.project
+.settings
+.svn
+.idea
+*.iml
+*.ipr
+*.iws
+bin
