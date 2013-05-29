@@ -5,10 +5,66 @@
 	<packaging>jar</packaging>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>Common Configuration Framework</name>
+    <description>Configuration Framework - works standalone but also works well with Spring.</description>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
 
 	<properties>
 		<spring.version>3.0.3.RELEASE</spring.version>
 	</properties>
+	
+	<url>https://github.com/nporiord/config-framework</url>
+    <licenses>
+        <license>
+            <name>The BSD 3-Clause License</name>
+            <distribution>repo</distribution>
+            <url>https://github.com/nporiord/config-framework/blob/master/LICENSE</url>
+            <comments>As well as repo distribution you may also fork the project on github at
+                https://github.com/nporiord/config-framework and build it from source, provided you follow the rules in the
+                License
+            </comments>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/nporiord/config-framework</url>
+        <connection>scm:git:https://github.com/nporiord/config-framework</connection>
+        <developerConnection>scm:git:git@github.com:nporiord/config-framework.git</developerConnection>
+      <tag>HEAD</tag>
+  </scm>
+
+
+    <developers>
+        <developer>
+            <name>Niall O'Riordan</name>
+            <id>nporiord</id>
+            <email>nporiord at gmail dot com</email>
+            <timezone>+10</timezone>
+            <properties>
+                <!-- <twitter>???</twitter> -->
+            </properties>
+            <roles>
+            	<role>Admin</role>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Karl roberts</name>
+            <id>karlroberts</id>
+            <email>github at owtelse dot com</email>
+            <timezone>+10</timezone>
+            <properties>
+                <twitter>MrK4rl</twitter>
+            </properties>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
 
 	<dependencies>
 		<dependency>
@@ -110,9 +166,15 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.5</source>
-					<target>1.5</target>
+                    <target>1.5</target>
+                    <testSource>1.5</testSource>
+                    <testTarget>1.5</testTarget>
 				</configuration>
 			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+            </plugin>
 		</plugins>
 	</build>
 	<profiles>
@@ -145,6 +207,50 @@
 				</plugins>
 			</build>
 		</profile>
+		
+		<!-- profile for generating javadoc and signing jars when doing maven release -->
+		<!-- the maven-release-plugin sets the performRelease property and will produce tags
+		     and versions in github, and modify the version in this pom.xml -->
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadoc-jar</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+		
 	</profiles>	
 
 
